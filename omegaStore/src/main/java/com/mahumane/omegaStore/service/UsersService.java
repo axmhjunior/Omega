@@ -50,5 +50,14 @@ public class UsersService implements UserDetailsService{
 		return action.findByName(username);
 	}
 
+	public ResponseEntity<?> deleteUser(int id) {
+		if(action.findById(id) != null) {
+			UsersModel usersModel = action.findById(id);
+			action.delete(usersModel);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
+	}
+
 	
 }

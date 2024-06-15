@@ -1,5 +1,7 @@
 package com.mahumane.omegaStore.dto;
 
+
+
 import jakarta.validation.constraints.NotBlank;
 
 public record UsersDto(
@@ -9,5 +11,7 @@ public record UsersDto(
 		String name,
 		
 		@NotBlank
-		String pass
+		String pass,
+		String roles
+		
 		) {}

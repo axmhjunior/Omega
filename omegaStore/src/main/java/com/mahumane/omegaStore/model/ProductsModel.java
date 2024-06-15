@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name="products")
 public class ProductsModel {
@@ -29,15 +30,17 @@ public class ProductsModel {
 	
 	private String coin_code;
 	
-	private String price;
+	private Double price;
+	
+	private int user_id;
 	
 	@CreationTimestamp
 	private LocalDateTime creation_date_time;
 
 	private int discounts;
 	
-	public ProductsModel(int id, String name, String description, String category, String coin_code, String price,
-			LocalDateTime creation_date_time, int discounts) {
+	public ProductsModel(int id, String name, String description, String category, String coin_code, Double price,
+			LocalDateTime creation_date_time, int discounts, int user_id) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,8 +50,19 @@ public class ProductsModel {
 		this.price = price;
 		this.creation_date_time = creation_date_time;
 		this.discounts = discounts;
+		this.user_id = user_id;
 	}
 	
+	public ProductsModel(ProductsDto dto, int user_id) {
+		this.id = dto.id();
+		this.name = dto.name();
+		this.description = dto.description();
+		this.category = dto.category();
+		this.coin_code = dto.coin_code();
+		this.price = dto.price();
+		this.discounts = dto.discounts();
+		this.user_id = user_id;
+	}
 	public ProductsModel(ProductsDto dto) {
 		this.id = dto.id();
 		this.name = dto.name();
@@ -63,6 +77,8 @@ public class ProductsModel {
 		super();
 	}
 
+
+
 	public int getId() {
 		return id;
 	}
@@ -70,16 +86,19 @@ public class ProductsModel {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public int getUser_id() {
+		return user_id;
+	}
+	
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 
 	public int getDiscounts() {
 		return discounts;
 	}
 
 	public void setDiscounts(int discounts) {
-		String value = String.valueOf(discounts);
-		if(!value.endsWith("%")) {
-			throw new IllegalArgumentException("The duscounts need end with %");
-		}
 		this.discounts = discounts;
 	}
 	
@@ -115,11 +134,11 @@ public class ProductsModel {
 		this.coin_code = coin_code;
 	}
 
-	public String getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

@@ -6,5 +6,6 @@ create table products (
 	coin_code VARCHAR(100) NOT NULL,
 	price DECIMAL(10, 2) NOT NULL,
 	discounts INT,
+	user_id INT,
 	creation_date_time DATETIME DEFAULT CURRENT_TIMESTAMP
 );

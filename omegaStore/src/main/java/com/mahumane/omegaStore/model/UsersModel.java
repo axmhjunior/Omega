@@ -15,6 +15,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+
 
 
 
@@ -23,6 +26,7 @@ import jakarta.persistence.Table;
 @Table(name= "users")
 public class UsersModel implements UserDetails{
 	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,13 +34,15 @@ public class UsersModel implements UserDetails{
 	@Column(unique = true)
 	private String name;
 	private String pass;
+	private String roles;
 	
 	
-	public UsersModel(int id, String name, String pass) {
+	public UsersModel(int id, String name, String pass, String roles) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.pass = pass;
+		this.roles = roles;
 	}
 	
 	public UsersModel() {}
@@ -44,8 +50,21 @@ public class UsersModel implements UserDetails{
 	
 	public UsersModel(UsersDto dto) {
 		this.id = dto.id();
+	}
+
+	public UsersModel(String name, String pass, String roles) {
+		this.name = name;
+		this.pass = pass;
+		this.roles = roles;
+	}
+
+
+	public UsersModel( UsersDto dto, String encryptedPassword, String roles) {
+		// TODO Auto-generated constructor stub
+		this.id = dto.id();
 		this.name = dto.name();
-		this.pass = dto.pass();
+		this.pass = encryptedPassword;
+		this.roles = roles;
 	}
 
 	public int getId() {
@@ -71,11 +90,21 @@ public class UsersModel implements UserDetails{
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
+	
+
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+		
+	return List.of(new SimpleGrantedAuthority("ROLE_"+roles));
 	}
 
 	@Override

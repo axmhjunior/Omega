@@ -9,5 +9,6 @@ import com.mahumane.omegaStore.model.UsersModel;
 public interface UsersRepository extends JpaRepository<UsersModel, Integer>{
 
 	UsersModel findByName(String name);
+	UsersModel findById(int id);
 
 }

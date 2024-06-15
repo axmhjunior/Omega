@@ -1,0 +1,6 @@
+CREATE TABLE update_info_storage(
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		product_id INT NOT NULL,
+		user_id INT NOT NULL,
+		update_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
